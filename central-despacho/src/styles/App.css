@@ -219,3 +219,196 @@ body, html, #root {
   .search-box { width: 100%; }
   .vista-buttons { overflow-x: auto; padding-bottom: 5px; } /* Scroll horizontal para botones */
 }
+
+/* --- Estilos Base de la Tarjeta --- */
+.alert-card {
+  background: white;
+  border-radius: 12px;
+  overflow: hidden; /* Para que la barra de color respete el borde */
+  box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+  border: 1px solid #e2e8f0;
+  display: flex;
+  flex-direction: column;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.alert-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+}
+
+/* --- Header de Color (La barra superior) --- */
+.card-top-bar {
+  padding: 0.6rem 1rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 0.75rem;
+  font-weight: 800;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  border-bottom: 1px solid rgba(0,0,0,0.05);
+}
+
+.card-type-label {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+/* --- Paleta de Colores por TIPO --- */
+
+/* Incendio (Rojo/Naranja) */
+.type-fire .card-top-bar {
+  background: #fef2f2;
+  color: #dc2626;
+  border-top: 4px solid #dc2626;
+}
+
+/* Policial (Azul Oscuro) */
+.type-police .card-top-bar {
+  background: #eff6ff;
+  color: #1e40af;
+  border-top: 4px solid #1e40af;
+}
+
+/* Vehicular (Gris/Azulado) */
+.type-traffic .card-top-bar {
+  background: #f1f5f9;
+  color: #475569;
+  border-top: 4px solid #475569;
+}
+
+/* Rescate (Naranja Ambar) */
+.type-rescue .card-top-bar {
+  background: #fff7ed;
+  color: #ea580c;
+  border-top: 4px solid #ea580c;
+}
+
+/* Medico (Verde Esmeralda) */
+.type-health .card-top-bar {
+  background: #ecfdf5;
+  color: #059669;
+  border-top: 4px solid #059669;
+}
+
+/* General (Violeta/Neutro) */
+.type-general .card-top-bar {
+  background: #faf5ff;
+  color: #7c3aed;
+  border-top: 4px solid #7c3aed;
+}
+
+/* --- Contenido de la Tarjeta --- */
+.card-content {
+  padding: 1.2rem;
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+}
+
+.card-title {
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: #1e293b;
+  margin: 0 0 0.5rem 0;
+  line-height: 1.4;
+}
+
+.card-desc {
+  font-size: 0.9rem;
+  color: #64748b;
+  margin-bottom: 1rem;
+  display: -webkit-box;
+  -webkit-line-clamp: 2; /* Limitar a 2 lineas */
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+/* --- Imagen de la Emergencia --- */
+.card-image-container {
+  width: 100%;
+  height: 160px; /* Altura fija para mantener uniformidad */
+  background-color: #f1f5f9;
+  border-radius: 8px;
+  overflow: hidden;
+  margin-bottom: 1rem;
+  border: 1px solid #e2e8f0;
+}
+
+.card-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover; /* Recorta la imagen para llenar el espacio sin deformar */
+  transition: transform 0.3s;
+}
+
+.alert-card:hover .card-img {
+  transform: scale(1.05); /* Zoom suave al pasar el mouse */
+}
+
+/* --- Detalles e Iconos --- */
+.card-details {
+  margin-top: auto; /* Empuja hacia abajo */
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+  padding-top: 1rem;
+  border-top: 1px solid #f1f5f9;
+  margin-bottom: 1.2rem;
+}
+
+.detail-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: #64748b;
+  font-size: 0.85rem;
+}
+
+.text-truncate {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* --- Botones --- */
+.card-actions {
+  display: flex;
+  gap: 0.8rem;
+}
+
+.action-btn {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 6px;
+  padding: 0.6rem;
+  border-radius: 6px;
+  font-size: 0.9rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.btn-outline {
+  background: white;
+  border: 1px solid #cbd5e1;
+  color: #475569;
+}
+.btn-outline:hover {
+  background: #f8fafc;
+  border-color: #94a3b8;
+  color: #0f172a;
+}
+
+.btn-primary {
+  background: #3b82f6;
+  border: none;
+  color: white;
+}
+.btn-primary:hover {
+  background: #2563eb;
+}
