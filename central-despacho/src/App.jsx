@@ -7,6 +7,7 @@ import ManageModal from './components/ManageModal';
 import './styles/App.css';
 import Navbar from './components/Navbar';
 import NewEmergencyModal from './components/NewEmergencyModal';
+import EPRManagerModal from './components/EPRManagerModal';
 import { updateEmergencia,   deleteEmergencia,   createEmergencia, uploadImage } from './services/firebase';
 
 function App() {
@@ -17,6 +18,7 @@ function App() {
 
   // 2. ESTADO PARA EL MODAL DE CREACIÓN
   const [showCreateModal, setShowCreateModal] = useState(false);
+  const [showEPRModal, setShowEPRModal] = useState(false);
   
   const { emergencias, loading, error } = useEmergencias();
 
@@ -173,6 +175,12 @@ function App() {
         />
       )}
 
+{/* 3. RENDERIZAR MODAL DE EPR */}
+      {showEPRModal && (
+        <EPRManagerModal onClose={() => setShowEPRModal(false)} />
+      )}
+
+
       {/* Header */}
       <header className="header">
         <div className="header-content">
@@ -185,8 +193,11 @@ function App() {
           </div>
 
  {      /* AQUÍ ESTÁ EL MENÚ navbar */}
-          <div style={{ flex: 1, display: 'flex', justifyContent: 'center', padding: '0 20px' }}>
-            <Navbar onNewEmergency={() => setShowCreateModal(true)} />
+         <div style={{ flex: 1, display: 'flex', justifyContent: 'center', padding: '0 20px' }}>
+            <Navbar 
+              onNewEmergency={() => setShowCreateModal(true)}
+              onOpenEPR={() => setShowEPRModal(true)} 
+            />
           </div>
 
           <div className="header-stats">

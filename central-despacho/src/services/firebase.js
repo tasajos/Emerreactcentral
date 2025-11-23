@@ -76,6 +76,25 @@ export const createEmergencia = async (data) => {
   }
 };
 
+// Crear nuevo EPR
+export const createEPR = async (data) => {
+  const eprRef = push(ref(db, 'epr'));
+  await set(eprRef, data);
+  return eprRef.key;
+};
+
+// Actualizar EPR existente
+export const updateEPR = async (id, data) => {
+  const eprRef = ref(db, `epr/${id}`);
+  await update(eprRef, data);
+};
+
+// Eliminar EPR
+export const deleteEPR = async (id) => {
+  const eprRef = ref(db, `epr/${id}`);
+  await remove(eprRef);
+};
+
 // Función para actualizar una emergencia
 export const updateEmergencia = async (id, data) => {
   const emergenciaRef = ref(db, `ultimasEmergencias/${id}`);

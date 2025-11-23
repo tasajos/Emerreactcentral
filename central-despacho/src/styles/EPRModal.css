@@ -1,0 +1,69 @@
+.epr-overlay {
+  position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
+  background: rgba(0,0,0,0.5); backdrop-filter: blur(2px);
+  display: flex; justify-content: center; align-items: center; z-index: 3500;
+}
+
+.epr-container {
+  background: white; width: 900px; max-width: 95%; height: 85vh;
+  border-radius: 12px; display: flex; flex-direction: column; overflow: hidden;
+  box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+}
+
+.epr-header {
+  padding: 1rem 1.5rem; background: #1e293b; color: white;
+  display: flex; justify-content: space-between; align-items: center;
+}
+
+.epr-body, .epr-form-body {
+  padding: 1.5rem; overflow-y: auto; flex: 1; display: flex; flex-direction: column;
+}
+
+/* --- ESTILOS TABLA --- */
+.epr-toolbar { margin-bottom: 1rem; display: flex; justify-content: flex-end; }
+
+.btn-add-epr {
+  background: #3b82f6; color: white; border: none; padding: 0.6rem 1.2rem;
+  border-radius: 6px; font-weight: 600; cursor: pointer; display: flex; gap: 8px; align-items: center;
+}
+.btn-add-epr:hover { background: #2563eb; }
+
+.table-responsive { width: 100%; overflow-x: auto; }
+.epr-table { width: 100%; border-collapse: collapse; font-size: 0.9rem; }
+
+.epr-table th { text-align: left; padding: 1rem; background: #f8fafc; color: #64748b; font-weight: 600; border-bottom: 2px solid #e2e8f0; }
+.epr-table td { padding: 0.8rem 1rem; border-bottom: 1px solid #f1f5f9; vertical-align: middle; }
+.epr-table tr:hover { background: #f8fafc; }
+
+.epr-mini-logo { width: 40px; height: 40px; border-radius: 50%; object-fit: cover; border: 1px solid #e2e8f0; }
+.badge-city { padding: 4px 8px; border-radius: 12px; font-size: 0.75rem; font-weight: bold; background: #e2e8f0; color: #475569; }
+.badge-city.city-cochabamba { background: #dbeafe; color: #1e40af; }
+
+.action-buttons { display: flex; gap: 8px; }
+.btn-icon-edit { background: #e0f2fe; color: #0284c7; border: none; padding: 6px; border-radius: 4px; cursor: pointer; }
+.btn-icon-delete { background: #fee2e2; color: #dc2626; border: none; padding: 6px; border-radius: 4px; cursor: pointer; }
+
+/* --- ESTILOS FORMULARIO --- */
+.form-grid-epr { display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; }
+@media(max-width: 768px) { .form-grid-epr { grid-template-columns: 1fr; } }
+
+.map-wrapper-epr { height: 250px; border: 1px solid #cbd5e1; border-radius: 8px; margin-top: 5px; }
+.coords-display { font-size: 0.75rem; color: #64748b; margin-top: 5px; display: flex; gap: 10px; }
+
+.image-upload-compact { display: flex; align-items: center; gap: 1rem; }
+.upload-btn {
+  background: #f1f5f9; border: 1px solid #cbd5e1; padding: 0.5rem 1rem; border-radius: 6px;
+  cursor: pointer; display: flex; gap: 6px; font-size: 0.9rem; color: #475569;
+}
+.preview-mini { width: 50px; height: 50px; border-radius: 6px; object-fit: cover; border: 1px solid #e2e8f0; }
+
+.epr-footer {
+  margin-top: auto; border-top: 1px solid #e2e8f0; padding-top: 1rem;
+  display: flex; justify-content: space-between;
+}
+.btn-back { background: transparent; border: 1px solid #cbd5e1; padding: 0.6rem 1rem; border-radius: 6px; cursor: pointer; display: flex; gap: 6px; }
+.btn-save-epr {
+  background: #059669; color: white; border: none; padding: 0.6rem 1.5rem; border-radius: 6px;
+  font-weight: bold; cursor: pointer; display: flex; gap: 8px; align-items: center;
+}
+.btn-save-epr:disabled { opacity: 0.7; }
