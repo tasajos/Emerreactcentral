@@ -1,5 +1,5 @@
 import { initializeApp } from 'firebase/app';
-import {   getDatabase,   ref,   onValue,   query,   orderByChild,   equalTo ,update} from 'firebase/database';
+import {   getDatabase,   ref,   onValue,   query,   orderByChild,   equalTo ,update,remove} from 'firebase/database';
 
 const firebaseConfig = {
   apiKey: "AIzaSyBUgMwsBl7aogNEVLOPzCfTBU2qky9e924",
@@ -24,6 +24,18 @@ export const getEmergencias = (callback) => {
 };
 
 
+//FUNCIÓN PARA ELIMINAR
+export const deleteEmergencia = async (id) => {
+  const emergenciaRef = ref(db, `ultimasEmergencias/${id}`);
+  try {
+    await remove(emergenciaRef);
+    console.log("Emergencia eliminada correctamente");
+    return true;
+  } catch (error) {
+    console.error("Error al eliminar emergencia:", error);
+    throw error;
+  }
+};
 
 // Función para obtener lista de EPR
 export const getEPR = (callback) => {

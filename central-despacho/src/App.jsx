@@ -4,7 +4,7 @@ import IncomingAlertModal from './components/IncomingAlertModal';
 import { useEmergencias } from './hooks/useFirebase';
 import { Bell, Search, List, Activity, Clock, AlertTriangle } from 'lucide-react';
 import ManageModal from './components/ManageModal';
-import { updateEmergencia } from './services/firebase';
+import { updateEmergencia,deleteEmergencia } from './services/firebase';
 import './styles/App.css';
 
 function App() {
@@ -39,6 +39,19 @@ function App() {
     }
   };
 
+
+  //  FUNCIÓN PARA ELIMINAR
+  const handleDeleteEmergencia = async (id) => {
+    // Confirmación simple del navegador para seguridad
+    if (window.confirm("¿Estás seguro de que deseas ELIMINAR esta emergencia? Esta acción no se puede deshacer.")) {
+      try {
+        await deleteEmergencia(id);
+        setSelectedEmergency(null); // Cerrar modal
+      } catch (error) {
+        alert("Error al eliminar: " + error.message);
+      }
+    }
+  };
   // --- LÓGICA DE DETECCIÓN DE NUEVA ALERTA ---
   useEffect(() => {
     if (loading) return;
@@ -101,12 +114,23 @@ function App() {
         />
       )}
 
-      {/* 2. MODAL DE GESTIÓN (EL QUE FALTABA) */}
+
+
+      {/* MODAL DE GESTIÓN (EL QUE FALTABA) */}
       {selectedEmergency && (
         <ManageModal 
           data={selectedEmergency}
           onClose={() => setSelectedEmergency(null)}
           onSave={handleSaveEmergency}
+        />
+      )}
+
+      {selectedEmergency && (
+        <ManageModal 
+          data={selectedEmergency}
+          onClose={() => setSelectedEmergency(null)}
+          onSave={handleSaveEmergency}
+          onDelete={handleDeleteEmergencia} // <--- PASAR LA FUNCIÓN AQUÍ
         />
       )}
 

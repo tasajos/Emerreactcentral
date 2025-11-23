@@ -70,3 +70,34 @@
 .btn-save:hover { background: #2563eb; }
 
 @keyframes popIn { from { transform: scale(0.95); opacity: 0; } to { transform: scale(1); opacity: 1; } }
+
+.manage-footer {
+  margin-top: 1rem; padding-top: 1rem; border-top: 1px solid #e2e8f0;
+  display: flex; 
+  justify-content: space-between; /* Separa los elementos a los extremos */
+  align-items: center;
+}
+
+.footer-actions-right {
+  display: flex;
+  gap: 1rem;
+}
+
+/* Estilo Botón Eliminar */
+.btn-delete {
+  padding: 0.7rem 1rem;
+  background: #fee2e2;
+  color: #dc2626;
+  border: 1px solid #fecaca;
+  border-radius: 6px;
+  cursor: pointer;
+  display: flex; align-items: center; gap: 6px;
+  font-weight: 600;
+  transition: all 0.2s;
+}
+
+.btn-delete:hover {
+  background: #dc2626;
+  color: white;
+  border-color: #b91c1c;
+}

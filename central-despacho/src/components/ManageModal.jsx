@@ -1,15 +1,15 @@
 import React, { useState, useEffect } from 'react';
-import { X, Save, Shield, MapPin, AlertTriangle, Radio } from 'lucide-react';
+import { X, Save, Shield, MapPin, AlertTriangle, Radio ,Trash2} from 'lucide-react';
 import { useEPR } from '../hooks/useEPR';
 import '../styles/ManageModal.css'; // Crearemos este CSS abajo
 
-const ManageModal = ({ data, onClose, onSave }) => {
+const ManageModal = ({ data, onClose, onSave,onDelete }) => {
   const { eprList } = useEPR(); // Obtenemos todas las unidades
   
   // Estado local del formulario
   const [formData, setFormData] = useState({
     titulo: '',
-    ciudad: '',
+    ciudad: 'Cochabamba',
     estado: 'Pendiente',
     tipo: 'General',
     asignadoA: '' // ID o Nombre del EPR asignado
@@ -20,7 +20,7 @@ const ManageModal = ({ data, onClose, onSave }) => {
     if (data) {
       setFormData({
         titulo: data.titulo || '',
-        ciudad: data.ciudad || '',
+        ciudad: data.ciudad || 'Cochabamba',
         estado: data.estado || 'Pendiente',
         tipo: data.tipo || 'General',
         asignadoA: data.asignadoA || ''
@@ -65,17 +65,20 @@ const ManageModal = ({ data, onClose, onSave }) => {
             />
           </div>
 
-          {/* Fila 2: Ciudad y Estado */}
+         {/*  Ciudad ahora es SELECT y Estado */}
           <div className="form-row">
             <div className="form-group">
               <label><MapPin size={14}/> Ciudad</label>
-              <input 
-                type="text" 
+              <select 
                 name="ciudad" 
                 value={formData.ciudad} 
                 onChange={handleChange} 
-                className="form-input"
-              />
+                className="form-select"
+              >
+                <option value="Cochabamba">Cochabamba</option>
+                <option value="La Paz">La Paz</option>
+                <option value="Santa Cruz">Santa Cruz</option>
+              </select>
             </div>
 
             <div className="form-group">
@@ -133,6 +136,15 @@ const ManageModal = ({ data, onClose, onSave }) => {
           </div>
 
           <div className="manage-footer">
+
+            {/* Botón ELIMINAR a la izquierda */}
+            <button 
+              type="button" 
+              onClick={() => onDelete(data.id)} 
+              className="btn-delete"
+            >
+              <Trash2 size={18}/> Eliminar
+            </button>
             <button type="button" onClick={onClose} className="btn-cancel">Cancelar</button>
             <button type="submit" className="btn-save"><Save size={18}/> Guardar Cambios</button>
           </div>
