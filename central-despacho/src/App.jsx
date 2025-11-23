@@ -8,6 +8,7 @@ import './styles/App.css';
 import Navbar from './components/Navbar';
 import NewEmergencyModal from './components/NewEmergencyModal';
 import EPRManagerModal from './components/EPRManagerModal';
+import AmbulanciaManagerModal from './components/AmbulanciaManagerModal';
 import { updateEmergencia,   deleteEmergencia,   createEmergencia, uploadImage } from './services/firebase';
 
 function App() {
@@ -19,6 +20,7 @@ function App() {
   // 2. ESTADO PARA EL MODAL DE CREACIÓN
   const [showCreateModal, setShowCreateModal] = useState(false);
   const [showEPRModal, setShowEPRModal] = useState(false);
+  const [showAmbulanciaModal, setShowAmbulanciaModal] = useState(false);
   
   const { emergencias, loading, error } = useEmergencias();
 
@@ -175,11 +177,15 @@ function App() {
         />
       )}
 
-{/* 3. RENDERIZAR MODAL DE EPR */}
+{/* RENDERIZAR MODAL DE EPR */}
       {showEPRModal && (
         <EPRManagerModal onClose={() => setShowEPRModal(false)} />
       )}
 
+{/* RENDERIZAR MODAL DE AMBULANCIA */}
+      {showAmbulanciaModal && (
+        <AmbulanciaManagerModal onClose={() => setShowAmbulanciaModal(false)} />
+      )}
 
       {/* Header */}
       <header className="header">
@@ -197,6 +203,7 @@ function App() {
             <Navbar 
               onNewEmergency={() => setShowCreateModal(true)}
               onOpenEPR={() => setShowEPRModal(true)} 
+              onOpenAmbulancia={() => setShowAmbulanciaModal(true)}
             />
           </div>
 

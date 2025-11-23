@@ -109,6 +109,31 @@ export const updateEmergencia = async (id, data) => {
   }
 };
 
+// Obtener lista de Ambulancias (para el hook)
+export const getAmbulancia = (callback) => {
+  const ambRef = ref(db, 'ambulancia');
+  return onValue(ambRef, callback);
+};
+
+// Crear nueva Ambulancia
+export const createAmbulancia = async (data) => {
+  const ambRef = push(ref(db, 'ambulancia'));
+  await set(ambRef, data);
+  return ambRef.key;
+};
+
+// Actualizar Ambulancia existente
+export const updateAmbulancia = async (id, data) => {
+  const ambRef = ref(db, `ambulancia/${id}`);
+  await update(ambRef, data);
+};
+
+// Eliminar Ambulancia
+export const deleteAmbulancia = async (id) => {
+  const ambRef = ref(db, `ambulancia/${id}`);
+  await remove(ambRef);
+};
+
 // Función para obtener emergencias por estado (Filtrado)
 export const getEmergenciasPorEstado = (estado, callback) => {
   const emergenciasRef = ref(db, 'ultimasEmergencias');

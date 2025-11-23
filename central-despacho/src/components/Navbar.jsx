@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
-import { Settings, FileText, Activity, Users, Truck, Wrench, ChevronDown,PlusCircle, AlertOctagon } from 'lucide-react';
+import { Settings, FileText, Activity, Users, Truck, Wrench, ChevronDown,PlusCircle, AlertOctagon,Ambulance } from 'lucide-react';
 import '../styles/Navbar.css';
 
-const Navbar = ({ onNewEmergency,onOpenEPR }) => {
+const Navbar = ({ onNewEmergency,onOpenEPR ,onOpenAmbulancia}) => {
   const [activeDropdown, setActiveDropdown] = useState(null);
 
   return (
@@ -34,10 +34,15 @@ const Navbar = ({ onNewEmergency,onOpenEPR }) => {
             >
               <Truck size={16} /> EPR (Unidades)
             </button>
+
+             <button 
+              className="dropdown-item"
+              onClick={(e) => { e.stopPropagation(); onOpenAmbulancia(); setActiveDropdown(null); }}
+              style={{ width: '100%', background: 'none', border: 'none', cursor: 'pointer', textAlign: 'left' }}
+            >
+              <Ambulance size={16} /> Ambulancia (Unidades)
+            </button>
             
-             <a href="#" className="dropdown-item">
-              <Truck size={16} /> Ambulancia (Unidades)
-            </a>
             <a href="#" className="dropdown-item">
               <Users size={16} /> Usuarios
             </a>
