@@ -18,9 +18,21 @@ const ManageModal = ({ data, onClose, onSave,onDelete }) => {
   // Cargar datos iniciales
   useEffect(() => {
     if (data) {
+      // 1. Definir las ciudades válidas que tienen EPRs
+      const ciudadesValidas = ['cochabamba', 'la paz', 'santa cruz'];
+      
+      // 2. Obtener la ciudad que viene de la alerta
+      let ciudadEntrante = data.ciudad || '';
+
+      // 3. Si la ciudad entrante no está en la lista válida (ej: "Detectada..."), forzar Cochabamba
+      // Esto asegura que el dropdown de EPR cargue los de Cochabamba por defecto
+      const esCiudadValida = ciudadesValidas.includes(ciudadEntrante.toLowerCase());
+      
+      const ciudadFinal = esCiudadValida ? ciudadEntrante : 'Cochabamba';
+
       setFormData({
         titulo: data.titulo || '',
-        ciudad: data.ciudad || 'Cochabamba',
+        ciudad: ciudadFinal, // <--- Usamos la ciudad corregida
         estado: data.estado || 'Pendiente',
         tipo: data.tipo || 'General',
         asignadoA: data.asignadoA || ''
@@ -28,9 +40,9 @@ const ManageModal = ({ data, onClose, onSave,onDelete }) => {
     }
   }, [data]);
 
-  // Filtrar EPRs por ciudad seleccionada
+  /// Filtrar EPRs usando formData.ciudad (que ahora siempre será válida)
   const eprDisponibles = eprList.filter(unit => 
-    unit.ciudad?.toLowerCase() === formData.ciudad?.toLowerCase()
+    unit.ciudad?.trim().toLowerCase() === formData.ciudad?.trim().toLowerCase()
   );
 
   const handleChange = (e) => {
@@ -110,7 +122,7 @@ const ManageModal = ({ data, onClose, onSave,onDelete }) => {
             </select>
           </div>
 
-          {/* Fila 4: Asignación de EPR (Dinámico) */}
+          {/* Asignación EPR - Ahora mostrará Cochabamba por defecto si la ciudad era inválida */}
           <div className="form-group highlight-group">
             <label>Asignar EPR Vigente ({formData.ciudad})</label>
             <select 
@@ -136,8 +148,6 @@ const ManageModal = ({ data, onClose, onSave,onDelete }) => {
           </div>
 
           <div className="manage-footer">
-
-            {/* Botón ELIMINAR a la izquierda */}
             <button 
               type="button" 
               onClick={() => onDelete(data.id)} 
@@ -145,8 +155,11 @@ const ManageModal = ({ data, onClose, onSave,onDelete }) => {
             >
               <Trash2 size={18}/> Eliminar
             </button>
-            <button type="button" onClick={onClose} className="btn-cancel">Cancelar</button>
-            <button type="submit" className="btn-save"><Save size={18}/> Guardar Cambios</button>
+            
+            <div className="footer-actions-right">
+                <button type="button" onClick={onClose} className="btn-cancel">Cancelar</button>
+                <button type="submit" className="btn-save"><Save size={18}/> Guardar Cambios</button>
+            </div>
           </div>
         </form>
       </div>
