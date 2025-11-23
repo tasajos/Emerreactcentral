@@ -4,18 +4,19 @@ import IncomingAlertModal from './components/IncomingAlertModal';
 import { useEmergencias } from './hooks/useFirebase';
 import { Bell, Search, List, Activity, Clock, AlertTriangle } from 'lucide-react';
 import ManageModal from './components/ManageModal';
-import { updateEmergencia,deleteEmergencia } from './services/firebase';
 import './styles/App.css';
+import Navbar from './components/Navbar';
+import NewEmergencyModal from './components/NewEmergencyModal';
+import { updateEmergencia,   deleteEmergencia,   createEmergencia, uploadImage } from './services/firebase';
 
 function App() {
   const [vistaActiva, setVistaActiva] = useState('todas');
   const [searchTerm, setSearchTerm] = useState('');
-  
-  // Estado para el modal de Gestión (Popup)
   const [selectedEmergency, setSelectedEmergency] = useState(null);
-  
-  // Estado para el modal de Nueva Alerta (Alarma)
   const [newAlertData, setNewAlertData] = useState(null);
+
+  // 2. ESTADO PARA EL MODAL DE CREACIÓN
+  const [showCreateModal, setShowCreateModal] = useState(false);
   
   const { emergencias, loading, error } = useEmergencias();
 
@@ -52,6 +53,36 @@ function App() {
       }
     }
   };
+
+  // 3. FUNCIÓN PARA CREAR EMERGENCIA (Lógica de subida)
+  const handleCreateEmergency = async (formData, imageFile) => {
+    try {
+      let imageUrl = "";
+      
+      // Si el usuario seleccionó una imagen, subirla primero
+      if (imageFile) {
+        imageUrl = await uploadImage(imageFile);
+      }
+
+      // Preparar el objeto final
+      const finalData = {
+        ...formData,
+        imagen: imageUrl // Guardar la URL, no el archivo
+      };
+
+      // Guardar en Base de Datos
+      await createEmergencia(finalData);
+
+      // Cerrar modal y limpiar
+      setShowCreateModal(false);
+      // alert("Emergencia creada exitosamente"); // Opcional
+
+    } catch (err) {
+      console.error("Error creando emergencia:", err);
+      alert("Hubo un error al crear la emergencia.");
+    }
+  };
+
   // --- LÓGICA DE DETECCIÓN DE NUEVA ALERTA ---
   useEffect(() => {
     if (loading) return;
@@ -134,6 +165,14 @@ function App() {
         />
       )}
 
+ {/* 4. RENDERIZAR NUEVO MODAL DE CREACIÓN */}
+      {showCreateModal && (
+        <NewEmergencyModal 
+          onClose={() => setShowCreateModal(false)}
+          onSave={handleCreateEmergency}
+        />
+      )}
+
       {/* Header */}
       <header className="header">
         <div className="header-content">
@@ -144,6 +183,12 @@ function App() {
               <p className="header-subtitle">Monitoreo y despacho en tiempo real</p>
             </div>
           </div>
+
+ {      /* AQUÍ ESTÁ EL MENÚ navbar */}
+          <div style={{ flex: 1, display: 'flex', justifyContent: 'center', padding: '0 20px' }}>
+            <Navbar onNewEmergency={() => setShowCreateModal(true)} />
+          </div>
+
           <div className="header-stats">
             <div className="stat-badge status-pendiente">
               <AlertTriangle size={14}/> {datosProcesados.stats.pendientes} Pendientes

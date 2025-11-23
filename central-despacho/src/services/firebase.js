@@ -1,5 +1,7 @@
 import { initializeApp } from 'firebase/app';
-import {   getDatabase,   ref,   onValue,   query,   orderByChild,   equalTo ,update,remove} from 'firebase/database';
+import {   getDatabase,   ref,   onValue,   query,   orderByChild,   equalTo ,update,remove,push, set} from 'firebase/database';
+import {   getStorage,   ref as storageRef,   uploadBytes,   getDownloadURL } from 'firebase/storage'; // <--- 3. Importaciones de Storage
+
 
 const firebaseConfig = {
   apiKey: "AIzaSyBUgMwsBl7aogNEVLOPzCfTBU2qky9e924",
@@ -15,6 +17,7 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 // Inicializar Realtime Database
 export const db = getDatabase(app);
+export const storage = getStorage(app);
 
 // Función para obtener todas las emergencias
 export const getEmergencias = (callback) => {
@@ -37,10 +40,40 @@ export const deleteEmergencia = async (id) => {
   }
 };
 
+
 // Función para obtener lista de EPR
 export const getEPR = (callback) => {
   const eprRef = ref(db, 'epr');
   return onValue(eprRef, callback);
+};
+
+// Subir Imagen a Firebase Storage
+export const uploadImage = async (file) => {
+  if (!file) return null;
+  // Crear referencia: carpeta "emergencias" / nombre_unico_archivo
+  const fileRef = storageRef(storage, `emergencias/${Date.now()}_${file.name}`);
+  
+  try {
+    const snapshot = await uploadBytes(fileRef, file);
+    const url = await getDownloadURL(snapshot.ref);
+    return url;
+  } catch (error) {
+    console.error("Error al subir imagen:", error);
+    throw error;
+  }
+};
+
+// Crear Nueva Emergencia en Realtime Database
+export const createEmergencia = async (data) => {
+  try {
+    const emergenciasRef = ref(db, 'ultimasEmergencias');
+    const newEmergenciaRef = push(emergenciasRef); // Genera ID único automáticamente
+    await set(newEmergenciaRef, data);
+    return newEmergenciaRef.key;
+  } catch (error) {
+    console.error("Error al crear emergencia:", error);
+    throw error;
+  }
 };
 
 // Función para actualizar una emergencia
