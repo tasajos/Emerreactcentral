@@ -1,12 +1,5 @@
 import { initializeApp } from 'firebase/app';
-import { 
-  getDatabase, 
-  ref, 
-  onValue, 
-  query, 
-  orderByChild, 
-  equalTo 
-} from 'firebase/database';
+import {   getDatabase,   ref,   onValue,   query,   orderByChild,   equalTo ,update} from 'firebase/database';
 
 const firebaseConfig = {
   apiKey: "AIzaSyBUgMwsBl7aogNEVLOPzCfTBU2qky9e924",
@@ -28,6 +21,28 @@ export const getEmergencias = (callback) => {
   const emergenciasRef = ref(db, 'ultimasEmergencias');
   // Escuchar cambios en tiempo real
   return onValue(emergenciasRef, callback);
+};
+
+
+
+// Función para obtener lista de EPR
+export const getEPR = (callback) => {
+  const eprRef = ref(db, 'epr');
+  return onValue(eprRef, callback);
+};
+
+// Función para actualizar una emergencia
+export const updateEmergencia = async (id, data) => {
+  const emergenciaRef = ref(db, `ultimasEmergencias/${id}`);
+  try {
+    // Aquí se usa la función 'update' que importamos arriba
+    await update(emergenciaRef, data);
+    console.log("Emergencia actualizada correctamente");
+    return true;
+  } catch (error) {
+    console.error("Error al actualizar emergencia:", error);
+    throw error;
+  }
 };
 
 // Función para obtener emergencias por estado (Filtrado)

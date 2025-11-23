@@ -1,7 +1,7 @@
 import React from 'react';
 import { MapPin, Phone, Clock, AlertTriangle, ExternalLink, ArrowRight, Calendar } from 'lucide-react';
 
-const AlertCard = ({ data }) => {
+const AlertCard = ({ data,onManage }) => {
   if (!data) return null;
 
   // 1. Lógica de Colores según el TIPO de emergencia
@@ -76,7 +76,11 @@ const AlertCard = ({ data }) => {
           <button onClick={handleOpenMap} className="action-btn btn-outline">
             <ExternalLink size={16} /> Mapa
           </button>
-          <button className="action-btn btn-primary">
+          {/* Botón Gestionar activado */}
+          <button 
+            className="action-btn btn-primary"
+            onClick={() => onManage(data)} // <--- Acción al clickear
+          >
             Gestionar <ArrowRight size={16} />
           </button>
         </div>

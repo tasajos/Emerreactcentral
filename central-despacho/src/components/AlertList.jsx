@@ -2,7 +2,7 @@ import React from 'react';
 import AlertCard from './AlertCard';
 import { AlertCircle } from 'lucide-react';
 
-const AlertList = ({ emergencias, loading }) => {
+const AlertList = ({ emergencias, loading, onManage }) => {
   if (loading) {
     return <div className="loading-state">Cargando datos en tiempo real...</div>;
   }
@@ -19,7 +19,7 @@ const AlertList = ({ emergencias, loading }) => {
   return (
     <div className="alerts-grid">
       {emergencias.map((emergencia) => (
-        <AlertCard key={emergencia.id} data={emergencia} />
+        <AlertCard key={emergencia.id} data={emergencia} onManage={onManage}/>
       ))}
     </div>
   );
