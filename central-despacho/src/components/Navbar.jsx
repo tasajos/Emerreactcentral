@@ -4,6 +4,8 @@ import '../styles/Navbar.css';
 
 const Navbar = ({ onNewEmergency,onOpenEPR ,onOpenAmbulancia}) => {
   const [activeDropdown, setActiveDropdown] = useState(null);
+   // Detectar si estamos en la vista de situación para resaltar el link
+  const isSituationView = window.location.search.includes('view=situacion');
 
   return (
     <nav className="navbar">
@@ -42,7 +44,7 @@ const Navbar = ({ onNewEmergency,onOpenEPR ,onOpenAmbulancia}) => {
             >
               <Ambulance size={16} /> Ambulancia (Unidades)
             </button>
-            
+
             <a href="#" className="dropdown-item">
               <Users size={16} /> Usuarios
             </a>
@@ -60,9 +62,15 @@ const Navbar = ({ onNewEmergency,onOpenEPR ,onOpenAmbulancia}) => {
           </a>
         </li>
 
-        {/* 3. Menú Situación Actual */}
+        {/* 3. Menú Situación Actual (CAMBIO AQUÍ) */}
         <li className="nav-item">
-          <a href="#" className="nav-link active-link"> {/* Clase active-link para simular estar en esta vista */}
+          {/* Usamos un enlace normal con target="_blank" y query param */}
+          <a 
+            href="?view=situacion" 
+            target="_blank" 
+            rel="noopener noreferrer"
+            className={`nav-link ${isSituationView ? 'active-link' : ''}`}
+          >
             <Activity size={18} />
             <span>Situación Actual</span>
           </a>
